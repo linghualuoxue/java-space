@@ -24,7 +24,7 @@ public class MyBoltTwo extends BaseRichBolt {
 
     public void execute(Tuple tuple) {
         String word = tuple.getString(0);
-        Integer num = Integer.valueOf(tuple.getString(1));
+        Integer num = tuple.getInteger(1);
         Integer count = map.get(word);
         System.out.println("ThreadName:"+Thread.currentThread().getId()+"->word:"+word);
         if(count!=null){

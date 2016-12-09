@@ -2,6 +2,9 @@ package com.bj.sxt;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
+import backtype.storm.StormSubmitter;
+import backtype.storm.generated.AlreadyAliveException;
+import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
 
@@ -18,8 +21,14 @@ public class StromWordCount {
 
         Config config = new Config();
         config.setNumWorkers(2);
-
-        LocalCluster cluster = new LocalCluster();
-        cluster.submitTopology("stormCount",config,builder.createTopology());
+        try {
+            StormSubmitter.submitTopology("stormCount",config,builder.createTopology());
+        } catch (AlreadyAliveException e) {
+            e.printStackTrace();
+        } catch (InvalidTopologyException e) {
+            e.printStackTrace();
+        }
+      /*  LocalCluster cluster = new LocalCluster();
+        cluster.submitTopology("stormCount",config,builder.createTopology());*/
     }
 }
